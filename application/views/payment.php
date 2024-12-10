@@ -1,36 +1,29 @@
-<!DOCTYPE html>
-<html>
+<!-- Include Midtrans Snap JS -->
+<script src="https://app.midtrans.com/snap/snap.js" data-client-key="YOUR_CLIENT_KEY"></script>
 
-<head>
-    <title>Midtrans Payment</title>
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="YOUR_CLIENT_KEY"></script>
-</head>
-
-<body>
-    <button id="pay-button">Pay!</button>
-
-    <script>
-    var payButton = document.getElementById('pay-button');
-    payButton.addEventListener('click', function() {
-        window.snap.pay('<?= $snapToken; ?>', {
-            onSuccess: function(result) {
-                alert('Payment success!');
-                console.log(result);
-            },
-            onPending: function(result) {
-                alert('Waiting for your payment!');
-                console.log(result);
-            },
-            onError: function(result) {
-                alert('Payment failed!');
-                console.log(result);
-            },
-            onClose: function() {
-                alert('You closed the popup without finishing the payment');
-            }
-        });
+<script type="text/javascript">
+function payNow() {
+    // Dapatkan snap_token dari controller
+    $.ajax({
+        url: 'Payment/create_payment',
+        method: 'GET',
+        success: function(response) {
+            var result = JSON.parse(response);
+            snap.pay(result.snap_token, {
+                onSuccess: function(result) {
+                    alert("Payment success!");
+                },
+                onPending: function(result) {
+                    alert("Waiting for payment approval!");
+                },
+                onError: function(result) {
+                    alert("Payment failed!");
+                }
+            });
+        }
     });
-    </script>
-</body>
+}
+</script>
 
-</html>
+<!-- Payment Button -->
+<button onclick="payNow()">Pay Now</button>

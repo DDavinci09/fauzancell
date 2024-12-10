@@ -312,5 +312,9 @@ switch (ENVIRONMENT)
  *
  * And away we go...
  */
+
+ // Load autoloader Composer
+require __DIR__ . '/vendor/autoload.php';
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 require_once BASEPATH.'core/CodeIgniter.php';
-require_once __DIR__ . '/vendor/autoload.php';

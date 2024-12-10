@@ -103,7 +103,7 @@ $autoload['helper'] = array('url', 'file', 'security', 'text', 'string');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array();
+$autoload['config'] = array('midtrans');
 
 /*
 | -------------------------------------------------------------------
