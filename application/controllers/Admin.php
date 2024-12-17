@@ -2,16 +2,56 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
+	
+	public function __construct() {
+        parent::__construct();
+
+        // Cek apakah user sudah login dan apakah levelnya admin
+        if ($this->session->userdata('level') !== 'admin') {
+            // Redirect ke halaman login jika tidak memenuhi syarat
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+			Login sebagai Admin!
+			</div>');
+            redirect('auth');
+        }
+    }
 
 	public function index()
 	{
 		$data['title'] = "Dashboard";
+		$data['users'] = $this->modelUser->getAll();
+		$data['kategori'] = $this->modelKategori->getAll();
+		$data['produk'] = $this->modelProduk->getAll();
+		$data['orders'] = $this->modelKeranjang->get_all_orders();
+		$data['profit'] = $this->modelKeranjang->get_total_pendapatan();
+
 
 		$this->load->view('layoutDashboard/header', $data);
 		$this->load->view('layoutDashboard/navbar', $data);
 		$this->load->view('layoutDashboard/sidebar', $data);
 		$this->load->view('dashboard/index', $data);
 		$this->load->view('layoutDashboard/footer', $data);
+	}
+	
+	public function v_users()
+	{
+		$data['title'] = "User";
+		$data['user'] = $this->modelUser->getAll();
+
+		$this->load->view('layoutDashboard/header', $data);
+		$this->load->view('layoutDashboard/navbar', $data);
+		$this->load->view('layoutDashboard/sidebar', $data);
+		$this->load->view('user/index', $data);
+		$this->load->view('layoutDashboard/footer', $data);
+	}
+
+	public function hapus_users($id_user)
+	{
+		$this->modelUser->hapus($id_user);
+		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+		Data User Berhasil Dihapus!
+		</div>');
+		redirect('Admin/v_users');
 	}
 	
 	public function v_kategori()
@@ -170,14 +210,47 @@ class Admin extends CI_Controller {
 	}
 
 	
-	public function v_pesanan()
+	public function v_order()
 	{
-		$data['title'] = "Pesanan";
+		$data['title'] = "Orders";
+		$data['orders'] = $this->modelKeranjang->get_all_orders();
 
 		$this->load->view('layoutDashboard/header', $data);
 		$this->load->view('layoutDashboard/navbar', $data);
 		$this->load->view('layoutDashboard/sidebar', $data);
-		$this->load->view('pesanan/index', $data);
+		$this->load->view('order/index', $data);
 		$this->load->view('layoutDashboard/footer', $data);
 	}
+
+	public function editStatusPesanan()
+    {
+		$status_pesanan = $this->input->post('status_pesanan');
+        
+        $data = [
+        "status_pesanan" => $status_pesanan,
+        "keterangan" => $this->input->post('keterangan', true)
+        ];
+
+        // Jika status selesai, tambahkan tanggal_diterima
+        if ($status_pesanan == 'Selesai') {
+            $data['tanggal_diterima'] = date('Y-m-d H:i:s'); // Waktu sekarang
+        }
+
+        $this->db->where('id_order', $this->input->post('id_order'));
+        $this->db->update('orders', $data);
+        // $this->modelKeranjang->editStatusPesanan();
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        Status Pesanan Berhasil Diperbaharui!
+        </div>');
+        redirect('Admin/v_order');
+    }
+
+	// Controller: AdminController.php
+	public function print_order($id_order) {
+		$data['order'] = $this->modelKeranjang->get_order_by_id($id_order);
+
+		// Tampilkan halaman untuk mencetak
+		$this->load->view('order/print_order', $data);
+	}
+
 }

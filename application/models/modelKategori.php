@@ -9,6 +9,11 @@ class modelKategori extends CI_Model
     return $this->db->get('kategori')->result_array();
   }
 
+  public function getidKategori($id_kategori)
+  {
+    return $this->db->get_where('kategori', ['id_kategori' => $id_kategori])->row_array();
+  }
+
   public function tambah()
   {
     $data = [

@@ -1,7 +1,7 @@
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
-        <a href="<?= base_url('assets'); ?>/index3.html" class="navbar-brand">
+        <a href="#" class="navbar-brand">
             <img src="<?= base_url('assets'); ?>/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                 class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Fauzan Cell</span>
@@ -21,14 +21,25 @@
                 <li class="nav-item">
                     <a href="<?= base_url() ?>Home/shop" class="nav-link">Shop</a>
                 </li>
-                <li class="nav-item">
-                    <a href="<?= base_url() ?>Keranjang/index" class="nav-link">Cart</a>
+                <?php if ($this->session->userdata('level') == 'user') { ?>
+                <li class="nav-item submenu dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                        aria-haspopup="true" aria-expanded="false">History</a>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url(); ?>Keranjang/Orders">Orders</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url(); ?>Keranjang/recentProduk">Recent
+                                Products</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="index3.html" class="nav-link">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a href="index3.html" class="nav-link">Contact</a>
+                <?php } ?>
+                <li class="nav-item submenu dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                        aria-haspopup="true" aria-expanded="false">About Us</a>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url(); ?>Home/AboutUs">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url(); ?>Home/Contact">Contact</a></li>
+                    </ul>
                 </li>
 
                 <!-- Search form -->
@@ -45,6 +56,21 @@
                         </div>
                     </form>
                 </li>
+            </ul>
+
+            <!-- Right navbar links (Login, Register, User Profile, etc.) -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Cart Icon with item count -->
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('keranjang'); ?>">
+                        <i class="fas fa-shopping-cart"></i>
+                        <?php $jumlah_keranjang = $this->session->userdata('keranjang') ? count($this->session->userdata('keranjang')) : 0; ?>
+                        <span class="text-danger font-weight-bold">
+                            <?= $jumlah_keranjang; ?>
+                        </span>
+                    </a>
+                </li>
+                <!-- Add ml-auto here to align to the right -->
                 <?php if ($this->session->userdata('level') != 'user') { ?>
                 <li class="nav-item mx-2 mb-2">
                     <!-- Tombol Login -->
@@ -52,38 +78,23 @@
                         <i class="fas fa-sign-in-alt"></i> Login
                     </a>
                 </li>
-                <li class="nav-item dropdown mx-2">
-                    <!-- Tombol Dropdown Registrasi -->
-                    <a class="btn btn-warning  dropdown-toggle" data-toggle="dropdown" href="#" id="registerDropdown">
+                <li class="nav-item mx-2 mb-2">
+                    <!-- Tombol Register -->
+                    <a class="btn btn-warning" href="<?= base_url() ?>Auth/registerUser">
                         <i class="fas fa-registered"></i> Register
                     </a>
-
-                    <!-- Isi Dropdown -->
-                    <div class="dropdown-menu" aria-labelledby="registerDropdown">
-                        <a href="<?= base_url() ?>Auth/registerUser" class="dropdown-item">
-                            <i class="fas fa-user mr-2"></i>User
-                        </a>
-                        <a href="<?= base_url() ?>Auth/registerAlumni" class="dropdown-item">
-                            <i class="fas fa-user-graduate mr-2"></i>Alumni
-                        </a>
-                    </div>
                 </li>
                 <?php } else { ?>
-                <li class="nav-item submenu dropdown mx-2">
-                    <a href="#" class="nav-link dropdown-toggle btn btn-primary text-light" data-toggle="dropdown"
-                        role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user fa-fw"></i>
-                        <span><?= $user['nama']; ?></span> <!-- Nama pengguna -->
+                <li class="nav-item dropdown mx-2">
+                    <a href="#" class="dropdown-toggle btn btn-primary text-light" data-toggle="dropdown" role="button"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                        <span><?= $user['nama']; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url(); ?>User/MyProfile">
+                            <a class="nav-link" href="<?= base_url(); ?>User/index">
                                 <i class="fas fa-user"></i> My Profile
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-calendar-check"></i> Activity Log
                             </a>
                         </li>
                         <li class="nav-item">

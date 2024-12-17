@@ -3,7 +3,7 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-danger">
                 <h5 class="modal-title" id="exampleModalLabel">Keluar Sekarang?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -28,7 +28,7 @@
         <!-- Copyright Section -->
         <div class="row">
             <div class="col text-center">
-                &copy; 2024 E-Commerce. All Rights Reserved.
+                &copy; 2024 FauzanCell.
             </div>
         </div>
     </div>
@@ -36,13 +36,16 @@
 
 </div>
 <!-- ./wrapper -->
-
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
+</script>
 <!-- jQuery -->
 <script src="<?= base_url('assets'); ?>/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="<?= base_url('assets'); ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="<?= base_url('assets'); ?>/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?= base_url('assets'); ?>/dist/js/adminlte.min.js"></script>
 <!-- Datatables -->
@@ -81,7 +84,6 @@ function deleteConfirmation(url) {
 
 <!-- Ekko Lightbox JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
-
 <script>
 $(document).on('click', '[data-toggle="lightbox"]', function(event) {
     event.preventDefault();

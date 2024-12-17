@@ -3,13 +3,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auth extends CI_Controller {
 
+	public function index()
+	{
+		$this->form_validation->set_rules('username', 'Username', 'required|trim');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('layoutHome/authheader');
+            $this->load->view('auth/index');
+            $this->load->view('layoutHome/authfooter');
+        } else {
+            $this->_Auth();
+        }
+	}
+
 	private function _Auth()
 	{
 		// Ambil input dari form
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 
-		// Cek apakah user ada berdasarkan username
+		// Cek apakah username adalah 'admin' dengan password '123'
+		if ($username == 'admin' && $password == '123') {
+			// Jika username dan password adalah admin dan 123
+			$data = [
+				'id_user' => 1,  // Anda bisa sesuaikan ID admin sesuai dengan ID yang ada di database
+				'username' => 'admin',
+				'level' => 'admin' // Menetapkan level admin
+			];
+
+			// Set session untuk admin
+			$this->session->set_userdata($data);
+
+			// Berikan pesan sukses untuk admin
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+				Login berhasil, Selamat Datang Admin!
+				</div>');
+
+			// Redirect ke halaman admin
+			redirect('Admin/index');
+		}
+
+		// Cek apakah user ada berdasarkan username jika bukan admin
 		$user = $this->modelUser->getUserByUsername($username);
 
 		// Jika usernya ada
@@ -32,7 +67,7 @@ class Auth extends CI_Controller {
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
 						Login berhasil, Selamat Datang User!
 						</div>');
-					redirect('User/index');
+					redirect('Home/index');
 				} elseif ($user['level'] == 'admin') {
 					// Jika level admin
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
@@ -62,19 +97,6 @@ class Auth extends CI_Controller {
 		}
 	}
 
-	public function index()
-	{
-		$this->form_validation->set_rules('username', 'Username', 'required|trim');
-        $this->form_validation->set_rules('password', 'Password', 'required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('layoutHome/authheader');
-            $this->load->view('auth/index');
-            $this->load->view('layoutHome/authfooter');
-        } else {
-            $this->_Auth();
-        }
-	}
 	
 	public function registerUser()
     {

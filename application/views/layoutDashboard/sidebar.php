@@ -47,17 +47,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= base_url(); ?>Admin/v_pesanan" class="nav-link">
+                    <a href="<?= base_url(); ?>Admin/v_order" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>
-                            Pesanan
+                            Orders
                         </p>
                     </a>
                 </li>
                 <li class="nav-header">Logout</li>
                 <li class="nav-item">
-                    <a href="pages/kanban.html" class="nav-link">
-                        <i class="nav-icon fas fa-columns"></i>
+                    <a class="nav-link" data-toggle="modal" data-target="#logoutModal">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
                             Logout
                         </p>

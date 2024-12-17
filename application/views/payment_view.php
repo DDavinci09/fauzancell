@@ -11,6 +11,7 @@
 
 <body>
     <h1>Payment</h1>
+
     <button id="pay-button">Pay Now</button>
 
     <script>

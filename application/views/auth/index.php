@@ -41,17 +41,9 @@
                         Home</a>
                 </div>
                 <div class="col">
-                    <a class="btn btn-info btn-sm dropdown-toggle btn-block" data-toggle="dropdown" href="#"><i
-                            class="fas fa-registered"></i> Register
+                    <a class="btn btn-info btn-sm btn-block" href="<?= base_url() ?>Auth/registerUser"><i
+                            class=" fas fa-registered"></i> Register
                     </a>
-                    <div class="dropdown-menu">
-                        <a href="<?= base_url() ?>Auth/registerUser" class="dropdown-item">
-                            <i class="fas fa-user mr-2"></i>User
-                        </a>
-                        <!-- <a href="<?= base_url() ?>Auth/registerAdmin" class="dropdown-item">
-                        <i class="fas fa-user mr-2"></i>Admin
-                    </a> -->
-                    </div>
                 </div>
             </div>
         </div>

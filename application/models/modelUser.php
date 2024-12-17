@@ -3,10 +3,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class modelUser extends CI_Model
 {
-  public function getAll2()
+  public function getAll()
   {
-    $this->db->order_by('id_kategori', 'DESC');
-    return $this->db->get('kategori')->result_array();
+    $this->db->order_by('id_user', 'DESC');
+    return $this->db->get('user')->result_array();
   }
 
   // Fungsi untuk mendapatkan user berdasarkan username
@@ -45,6 +45,11 @@ class modelUser extends CI_Model
     } else {
         return false; // Tidak ada sesi
     }
+  }
+
+  public function hapus($id_user)
+  {
+    $this->db->delete('user', ['id_user' => $id_user]);
   }
   
   
